@@ -21,7 +21,7 @@
   <div id="updateForm">
     <label for="numAttending">Number Attending:
       <select id="guestNumber">
-        <option>--</option>
+        <option>0</option>
         <option>1</option>
         <option>2</option>
         <option>3</option>
@@ -34,7 +34,6 @@
     var resultObj;
     function lookupResponse(){
       resultObj = JSON.parse(this.responseText).results[0];
-      console.log(JSON.parse(this.responseText));
       document.getElementById("response").innerHTML = "found reservation for: "+resultObj.name;
       document.getElementById("updateForm").className = 'active';
     }
@@ -46,7 +45,23 @@
       req.send();
     }
     function updateEntry(){
-
+      var num = document.getElementById("guestNumber");
+      var guestVal = num.options[num.selectedIndex].value;
+      var body = {
+        attending:true,
+        guests:guestVal,
+        request:document.getElementById("songRequest").value,
+        invite_id:"01432"
+      }
+      var req = new XMLHttpRequest();
+      req.addEventListener('load', function(){
+        console.log(this.responseText);
+        document.getElementById("response").innerHTML = "Thanks for updating!";
+        document.getElementById("updateForm").classList.remove("active");
+      });
+      req.open('POST', '/update', true);
+      req.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      req.send(JSON.stringify(body));
     } 
   </script>
 </body>

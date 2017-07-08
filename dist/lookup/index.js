@@ -15,6 +15,13 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var lookup = {};
+var mongoUrl = process.env.MONGODB_URI;
+var guest = new _mongoose2.default.Schema({
+  name: String,
+  attending: Boolean,
+  guests: Number,
+  request: String
+});
 
 lookup.find = function (req, res) {
   var id = req.params.id;

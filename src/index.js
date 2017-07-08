@@ -1,3 +1,5 @@
+// require('dotenv').config();
+import {} from 'dotenv/config';
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
@@ -44,6 +46,9 @@ initializeDb( db => {
     // console.log(api.find);
     // api.find(req, res);
     lookup.find(req, res);
+  });
+  app.post('/update', function(req, res){
+    lookup.update(req, res);
   });
   app.get('/', function (req, res) {
     res.sendFile('home.html', fileopts);
