@@ -46,8 +46,8 @@ var _lookup2 = _interopRequireDefault(_lookup);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-require('dotenv').config();
-
+// require('dotenv').config();
+// import {} from 'dotenv/config';
 var app = (0, _express2.default)();
 var fileopts = {
   root: __dirname + '/views/',
@@ -83,6 +83,9 @@ app.use(_bodyParser2.default.json({
     // console.log(api.find);
     // api.find(req, res);
     _lookup2.default.find(req, res);
+  });
+  app.post('/update', function (req, res) {
+    _lookup2.default.update(req, res);
   });
   app.get('/', function (req, res) {
     res.sendFile('home.html', fileopts);

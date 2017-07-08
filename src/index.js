@@ -1,5 +1,5 @@
 // require('dotenv').config();
-import {} from 'dotenv/config';
+// import {} from 'dotenv/config';
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
