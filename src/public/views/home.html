@@ -3,6 +3,10 @@
 <head>
   <title>RSVP</title>
   <style type="text/css">
+    @import url('https://fonts.googleapis.com/css?family=Old+Standard+TT');
+    body{
+      font-family: 'Old Standard TT', serif;
+    }
     #updateForm{
       display: none;
       height: 0;
@@ -12,17 +16,43 @@
       display: inline-block;
       height: auto;
     }
+    #updateForm button{
+      padding: .5rem;
+    }
+    p{
+      background-color: #ececec;
+      padding: .3em;
+    }
+    p input[type="text"]{
+      width: 98%;
+    }
+    button{
+      background-color: #e69293;
+      color: #fff;
+      border: 0;
+      padding: 1%;
+      font-weight: 700;
+      font-size: .8em;
+    }
+    button:hover{
+      cursor: pointer;
+    }
+    input[type="text"]{
+      padding: 1%;
+      border: 1px solid #ececec;
+      min-width: 300px;
+    }
   </style>
   <!-- 
   <script type="text/javascript" src="js/form-actions.js"></script>
   <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 </head>
 <body>
-  <input type="text" name="ID" id="rsvpCode" placeholder="RSVP CODE" onkeyup="handleKey(event)">
-  <button onclick='findEntry()'>FIND</button>
+  <input type="text" name="ID" id="rsvpCode" placeholder="ENTER YOUR RSVP CODE" onkeyup="handleKey(event)">
+  <button onclick='findEntry()'>Find</button>
   <div id="response"></div>
   <div id="updateForm">
-    <button onclick="saveEntries()">SUBMIT</button>
+    <button onclick="saveEntries()">Submit</button>
   </div>
   <script type="text/javascript">
     var resultObj;
@@ -35,23 +65,29 @@
     }
     function lookupResponse(){
       resultObj = JSON.parse(this.responseText).results;
-      var resString = "<p><h2>Guests:</h2>"
-      resultObj.forEach(function(item){
+      var resString = ""
+      if(resultObj.length > 0){
+        resString += "<h2>Guests:</h2>";
+        resultObj.forEach(function(item){
         // build rsvp inputs
-        resString += '<strong>'+item.name+'</strong><br/>';
-        resString += '<span>Attending? </span><select id="'+item._id+'_attending">';
-        // check attending val and build dropdown
-        if(item.attending){
-          resString += '<option value="true" selected>Yes!</option><option value="false">No :(</option>';
-        }else{
-          resString += '<option value="false" selected>No :(</option><option value="true">Yes!</option>';
-        }
-        resString += '</select></br>';
-        // initialize request fields
-        var placeholderTxt = item.request.length > 0 ? item.request : 'REQUEST A SONG';
-        var reqTxt = item.request.length > 0 ? item.request : '';
-        resString += 'I want to hear: <input type="text" placeholder="'+placeholderTxt+'" value="'+reqTxt+'" id="'+item._id+'_songRequest"></p>';
-      });
+          resString += '<p><strong>'+item.name+'</strong><br/>';
+          resString += '<span>Attending? </span><br/><select id="'+item._id+'_attending">';
+          // check attending val and build dropdown
+          if(item.attending){
+            resString += '<option value="true" selected>Yes!</option><option value="false">No :(</option>';
+          }else{
+            resString += '<option value="false" selected>No :(</option><option value="true">Yes!</option>';
+          }
+          resString += '</select></br>';
+          // initialize request fields
+          var placeholderTxt = item.request.length > 0 ? item.request : 'REQUEST A SONG';
+          var reqTxt = item.request.length > 0 ? item.request : '';
+          resString += 'I want to hear: <br/><input type="text" placeholder="'+placeholderTxt+'" value="'+reqTxt+'" id="'+item._id+'_songRequest"></p>';
+        });
+      }else{
+        resString += "<h2>Could Not Find Guests for Invite "+document.getElementById("rsvpCode").value+"</h2>";
+      }
+      
       document.getElementById("response").innerHTML = resString;
       document.getElementById("updateForm").className = 'active';
     }
@@ -81,7 +117,7 @@
       var req = new XMLHttpRequest();
       req.addEventListener('load', function(){
         console.log(this.responseText);
-        document.getElementById("response").innerHTML = "Thanks for updating!";
+        document.getElementById("response").innerHTML = "<p>Thanks for updating!</p>";
         document.getElementById("updateForm").classList.remove("active");
       });
       req.open('POST', '/update', true);
