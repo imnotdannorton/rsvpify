@@ -1,0 +1,9 @@
+#updateForm{
+  display: none;
+  height: 0;
+  animation: 2s all;
+}
+#updateForm.active{
+  display: inline-block;
+  height: auto;
+}
