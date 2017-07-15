@@ -13,7 +13,7 @@ import lookup from './lookup';
 
 let app = express();
 let fileopts =  {
-  root: __dirname + '/views/',
+  root: __dirname + '/public/',
   dotfiles: 'deny',
   headers: {
       'x-timestamp': Date.now(),
@@ -33,25 +33,21 @@ app.use(cors({
 app.use(bodyParser.json({
 	limit : config.bodyLimit
 }));
-
+app.use(express.static('public'));
 // connect to db
 initializeDb( db => {
-
 	// internal middleware
 	app.use(middleware({ config, db }));
-
 	// api router
 	app.use('/api', api({ config, db }));
   app.get('/find/:id', function(req, res){
-    // console.log(api.find);
-    // api.find(req, res);
     lookup.find(req, res);
   });
   app.post('/update', function(req, res){
     lookup.update(req, res);
   });
   app.get('/', function (req, res) {
-    res.sendFile('home.html', fileopts);
+    res.sendFile('/views/home.html', fileopts);
   });
 	app.server.listen(process.env.PORT || config.port, () => {
 		console.log(`Started on port ${app.server.address().port}`);

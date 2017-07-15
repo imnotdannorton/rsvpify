@@ -50,7 +50,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // import {} from 'dotenv/config';
 var app = (0, _express2.default)();
 var fileopts = {
-  root: __dirname + '/views/',
+  root: __dirname + '/public/',
   dotfiles: 'deny',
   headers: {
     'x-timestamp': Date.now(),
@@ -70,25 +70,21 @@ app.use((0, _cors2.default)({
 app.use(_bodyParser2.default.json({
   limit: _config2.default.bodyLimit
 }));
-
+app.use(_express2.default.static('public'));
 // connect to db
 (0, _db2.default)(function (db) {
-
   // internal middleware
   app.use((0, _middleware2.default)({ config: _config2.default, db: db }));
-
   // api router
   app.use('/api', (0, _api2.default)({ config: _config2.default, db: db }));
   app.get('/find/:id', function (req, res) {
-    // console.log(api.find);
-    // api.find(req, res);
     _lookup2.default.find(req, res);
   });
   app.post('/update', function (req, res) {
     _lookup2.default.update(req, res);
   });
   app.get('/', function (req, res) {
-    res.sendFile('home.html', fileopts);
+    res.sendFile('/views/home.html', fileopts);
   });
   app.server.listen(process.env.PORT || _config2.default.port, function () {
     console.log('Started on port ' + app.server.address().port);

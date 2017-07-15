@@ -35,39 +35,50 @@ var guestSchema = new _mongoose2.default.Schema({
 
 var Guest = _mongoose2.default.model('guests', guestSchema);
 
-Guest.remove({}, function (err) {
-	if (err) {
-		console.log('error deleting old data.', err);
-	}
-});
+// Guest.remove({}, function(err) {
+//   if (err) {
+//     console.log ('error deleting old data.', err);
+//   }else{
+//   	console.log('deleted old daterz');
+//   }
+// });
 
-var demo = new Guest({
-	name: "Ella Fitzgerald",
-	attending: true,
-	guests: 2,
-	request: "I wanna Dance With Somebody",
-	invite_id: "01432"
-});
+// let demo = new Guest({
+// 	name:"Ella Fitzgerald",
+// 	attending:true,
+// 	guests:2,
+// 	request:"I wanna Dance With Somebody",
+// 	invite_id:"01432"
+// });
 
-demo.save(function (err) {
-	if (err) {
-		console.log('error saving', err);
-	}
-});
+// let demo2 = new Guest({
+// 	name:"Alison Levack",
+// 	attending:true,
+// 	guests:2,
+// 	request:"Invisible Touch",
+// 	invite_id:"01432"
+// });
+// demo2.save((err)=>{
+// 	if(err){
+// 		console.log('error saving 2', err);
+// 	}
+// });
+
+// demo.save( (err) => {
+// 	if(err){
+// 		console.log('error saving', err);
+// 	}
+// });
 
 lookup.find = function (req, res) {
 	var id = req.params.id;
 	var results = [];
-	// facets.forEach(function(item){
-	//   if(item.id == id){
-	//     results.push(item);
-	//   }
-	// })
-	var guest = Guest.findOne({ "invite_id": id }, function (err, result) {
+	// find guests with invite ID of id
+	var guest = Guest.find({ "invite_id": id }, function (err, result) {
 		console.log('err: ', err, 'result: ', result);
 		if (result) {
-			results.push(result);
-			res.json({ 'results': results });
+			// push results with that invite ID
+			res.json({ 'results': result });
 		} else {
 			results.push({ 'name': 'none found' });
 			res.json({ 'results': results });
@@ -76,7 +87,7 @@ lookup.find = function (req, res) {
 };
 lookup.update = function (req, res) {
 	var userData = req.body;
-	var find = { 'invite_id': userData.invite_id };
+	var find = { '_id': userData._id };
 	Guest.update(find, userData, function (err, item) {
 		console.log('updated: ', item, 'error? ', err);
 		if (item) {
