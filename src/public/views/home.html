@@ -3,7 +3,7 @@
 <head>
   <title>RSVP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style type="text/css">
+  <!-- <style type="text/css">
     @import url('https://fonts.googleapis.com/css?family=Old+Standard+TT');
     body{
       font-family: 'Old Standard TT', serif;
@@ -58,10 +58,10 @@
         display: block;
       }
     }
-  </style>
-  <!-- 
-  <script type="text/javascript" src="js/form-actions.js"></script>
-  <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+  </style> -->
+  
+  <script type="text/javascript" src="../public/js/form-actions.js"></script>
+  <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body>
   <input type="text" name="ID" id="rsvpCode" placeholder="ENTER YOUR RSVP CODE" onkeyup="handleKey(event)">
@@ -70,7 +70,8 @@
   <div id="updateForm">
     <button onclick="saveEntries()">Submit</button>
   </div>
-  <script type="text/javascript">
+  <!-- <script type="text/javascript" src="../public/js/form-actions.js"></script> -->
+<!--   <script type="text/javascript">
     var resultObj;
     // enable submit listener for enter on find focus
     function handleKey(e){
@@ -140,6 +141,6 @@
       req.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
       req.send(JSON.stringify(body));
     } 
-  </script>
+  </script> -->
 </body>
 </html>

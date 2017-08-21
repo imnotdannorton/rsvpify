@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Old+Standard+TT');
+body{
+  font-family: 'Old Standard TT', serif;
+}
 #updateForm{
   display: none;
   height: 0;
@@ -6,4 +10,62 @@
 #updateForm.active{
   display: inline-block;
   height: auto;
+}
+#updateForm button{
+  padding: .5rem;
+}
+#results .guest{
+  display: block;
+  padding: 1%;
+  margin: 1px;
+  /*border-bottom: 1px solid #ececec;*/
+}
+#results .guest strong{
+  float: right;
+  min-width: 40%;
+  display: inline-block;
+}
+.attending{
+  background-color: #adefb5;
+}
+.not-attending{
+  background-color: #f97676;
+}
+p{
+  background-color: #ececec;
+  padding: .3em;
+}
+p input[type="text"]{
+  width: 98%;
+}
+button{
+  background-color: #e69293;
+  color: #fff;
+  border: 0;
+  padding: 1%;
+  font-weight: 700;
+  font-size: .8em;
+}
+button:hover{
+  cursor: pointer;
+}
+input[type="text"]{
+  padding: 1%;
+  border: 1px solid #ececec;
+  min-width: 300px;
+}
+@media (max-width: 600px) {
+  input[type="text"]{
+    width: 98%;
+    font-size: .9rem;
+  }
+  button{
+    display: block;
+    width: 100%;
+    font-size: .9rem;
+    padding: .5rem;
+  }
+  #updateForm.active{
+    display: block;
+  }
 }

@@ -19,7 +19,7 @@ var mongoUrl = process.env.MONGODB_URI;
 
 _mongoose2.default.connect(mongoUrl, function (err, res) {
 	if (err) {
-		console.log("error connecting to " + mongoUrl + ": ", err);
+		console.log("ERROR IN DIST FOLDER error connecting to " + mongoUrl + ": ", err);
 	} else {
 		console.log("success!: " + mongoUrl);
 	}

@@ -1,5 +1,5 @@
-// require('dotenv').config();
-// import {} from 'dotenv/config';
+require('dotenv').config();
+import {} from 'dotenv/config';
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
@@ -33,9 +33,10 @@ app.use(cors({
 app.use(bodyParser.json({
 	limit : config.bodyLimit
 }));
-app.use(express.static('public'));
+app.use('/public', express.static( __dirname +'/public'));
 // connect to db
 initializeDb( db => {
+
 	// internal middleware
 	app.use(middleware({ config, db }));
 	// api router
@@ -43,11 +44,17 @@ initializeDb( db => {
   app.get('/find/:id', function(req, res){
     lookup.find(req, res);
   });
+  app.get('/guests', function (req, res){
+    lookup.fetchAll(req,res);
+  });
   app.post('/update', function(req, res){
     lookup.update(req, res);
   });
   app.get('/', function (req, res) {
     res.sendFile('/views/home.html', fileopts);
+  });
+  app.get('/guestlist', function (req, res) {
+    res.sendFile('/views/list.html', fileopts);
   });
 	app.server.listen(process.env.PORT || config.port, () => {
 		console.log(`Started on port ${app.server.address().port}`);
